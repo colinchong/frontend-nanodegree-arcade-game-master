@@ -29,7 +29,7 @@ Enemy.prototype.update = function(dt) {
         this.y = startLocations[Math.floor(Math.random() * startLocations.length)];
     }
     //Collision check
-    if (player.x >= this.x - 50 && player.x <= this.x + 50 && player.y >= this.y - 50 && player.y <= this.y + 50) {
+    if (player.x >= this.x - 75 && player.x <= this.x + 75 && player.y >= this.y - 50 && player.y <= this.y + 50) {
         player.reset();
     }
 };
@@ -100,8 +100,8 @@ Player.prototype.render = function() {
 
 //Reset function for player on collision or win
 Player.prototype.reset = function() {
-    player.x = 200;
-    player.y = 380;
+    this.x = 200;
+    this.y = 380;
 };
 
 // This class requires an update(), render() and
