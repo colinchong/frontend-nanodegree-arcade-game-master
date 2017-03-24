@@ -22,7 +22,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     if (this.x <= 500) {
         this.x += this.speed * dt;
-    //Moves enemy back to start position, adjusts speed, re-randomizes location
+        //Moves enemy back to start position, adjusts speed, re-randomizes location
     } else {
         this.x = -100;
         this.speed = Math.random() * 400 + 100;
@@ -30,7 +30,7 @@ Enemy.prototype.update = function(dt) {
     }
     //Collision check
     if (player.x >= this.x - 50 && player.x <= this.x + 50 && player.y >= this.y - 50 && player.y <= this.y + 50) {
-            player.reset();
+        player.reset();
     }
 };
 
@@ -54,22 +54,44 @@ Player.prototype.handleInput = function(e) {
 
 //Player movement
 Player.prototype.update = function() {
-    //Win condition
+
+    //Increment player movement on key press
+    var horiztonalMove = 100;
+    var verticalMove = 81;
+    switch (this.keyPress) {
+        case 'left':
+            if (this.x > 0) {
+                this.x -= horiztonalMove;
+            } else {
+                this.keyPress = 0;
+            }
+            break;
+        case 'right':
+            if (this.x < 380) {
+                this.x += horiztonalMove;
+            } else {
+                this.keyPress = 0;
+            }
+            break;
+        case 'up':
+            this.y -= verticalMove;
+            break;
+        case 'down':
+            if (this.y < 380) {
+                this.y += verticalMove;
+            } else {
+                this.keyPress = 0;
+            }
+            break;
+    }
+    this.keyPress = 0;
+
+    //Win Condition
     if (this.y <= 50) {
         this.reset();
     }
-    //Increment player movement on key press
-    if (this.keyPress === 'left' && this.x > 0) {
-        this.x = this.x - 100;
-    } else if (this.keyPress === 'right' && this.x != 400) {
-        this.x = this.x + 100;
-    } else if (this.keyPress === 'up') {
-        this.y = this.y - 81;
-    } else if (this.keyPress === 'down' && this.y < 380) {
-        this.y = this.y + 81;
-    }
-    this.keyPress = 0;
 };
+
 
 //Draw sprite
 Player.prototype.render = function() {
@@ -99,7 +121,7 @@ var numberEnemies = prompt("How many bugs do you want to dodge?", "3");
 
 for (var i = 0; i < numberEnemies; i++) {
     addEnemies();
-};
+}
 
 // Place the player object in a variable called player
 var player = new Player();
